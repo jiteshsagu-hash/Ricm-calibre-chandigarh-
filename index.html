@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calibre Club · RICM Chandigarh</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..650&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#050507;--fg:#fff;--mut:rgba(255,255,255,.6);--acc:#b9abff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,sans-serif;overflow:hidden}
+#gl{position:fixed;inset:0;display:block;width:100%;height:100%}
+#defs{position:fixed;inset:0;opacity:0;pointer-events:none;transition:opacity .25s;overflow-y:auto}
+#defs.on{opacity:1;pointer-events:auto;transition:opacity .4s}
+.col{position:absolute;left:32.4%;width:38%;top:24%;padding-bottom:40px}
+.col h2{font-weight:650;font-size:clamp(22px,1.9vw,36px);letter-spacing:-.022em;margin:0 0 1.4vw}
+.col p{font-size:clamp(14px,.98vw,18px);line-height:1.72;color:var(--mut);margin:0 0 1.05vw}
+.col p b{color:#fff;font-weight:600}
+.col h3{font-weight:650;font-size:clamp(18px,1.4vw,26px);letter-spacing:-.015em;margin:2.4vw 0 .8vw;color:#fff}
+.col .lead{color:#fff;font-size:clamp(15px,1.1vw,20px)}
+.col .vals{list-style:none;margin:0 0 1.4vw;padding:0}
+.col .vals li{padding:12px 0;border-top:1px solid rgba(185,171,255,.2);font-size:clamp(14px,.98vw,18px);line-height:1.5;color:var(--mut)}
+.col .vals li b{color:#fff;font-weight:600;margin-right:6px}
+.col .vg{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
+.col a,#joinm .mail a{color:var(--acc);text-decoration:none;border-bottom:1px solid rgba(185,171,255,.4);word-break:break-all}
+.col a:hover,#joinm .mail a:hover{color:#fff}
+#joinm .mail{margin:10px 0 0;text-align:center;font-size:12.5px;color:var(--mut)}
+@media(max-width:760px){.col .vg{grid-template-columns:1fr}}
+#back{position:absolute;left:14.7%;top:17%;padding:14px 38px 14px 30px;border:1px solid rgba(255,255,255,.2);border-radius:10px;background:linear-gradient(135deg,#25252c,#0c0c10);color:#fff;font:500 clamp(13px,.9vw,16px) Inter,sans-serif;cursor:pointer;transform:perspective(600px) rotateY(-9deg) rotateX(4deg) skewY(-6deg);box-shadow:0 10px 30px #000a,inset 0 1px 0 rgba(255,255,255,.25);transition:color .2s,transform .2s}
+#back:hover{color:var(--acc);transform:perspective(600px) rotateY(-4deg) rotateX(7deg) skewY(-6deg)}
+#fallback{display:none}
+#fallback small{}
+#joinm{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(5,5,7,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+#joinm.on{display:flex}
+#joinm .box{position:relative;width:100%;max-width:420px;max-height:100%;overflow-y:auto;background:linear-gradient(160deg,#1b1630,#0d0b16);border:1px solid rgba(185,171,255,.28);border-radius:16px;padding:26px 22px;box-shadow:0 30px 80px #000c}
+#joinm h3{margin:0 0 4px;font-weight:650;font-size:24px;letter-spacing:-.02em}
+#joinm .sub{margin:0 0 20px;color:var(--mut);font-size:14px}
+#joinm .x{position:absolute;right:12px;top:10px;background:none;border:0;color:var(--mut);font-size:26px;cursor:pointer;line-height:1;padding:6px 10px}
+#joinm label{display:block;font-weight:500;font-size:13px;margin:0 0 6px;color:rgba(255,255,255,.85)}
+#joinm .f{margin-bottom:16px}
+#joinm input{width:100%;font:inherit;font-size:16px;color:#fff;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.16);border-radius:10px;padding:12px 14px;outline:none}
+#joinm input:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(185,171,255,.22)}
+#joinm .ph{display:flex;border:1.5px solid rgba(255,255,255,.16);border-radius:10px;overflow:hidden;background:rgba(255,255,255,.05)}
+#joinm .ph:focus-within{border-color:var(--acc);box-shadow:0 0 0 3px rgba(185,171,255,.22)}
+#joinm .ph span{display:flex;align-items:center;padding:0 12px;font-weight:600;background:rgba(185,171,255,.14)}
+#joinm .ph input{border:0;border-radius:0;background:transparent;box-shadow:none}
+#joinm .err{display:none;color:#ff7b7b;font-size:12.5px;margin-top:6px}
+#joinm .bad .err{display:block}
+#joinm .bad input,#joinm .bad .ph{border-color:#ff7b7b}
+#joinm .go{width:100%;font:600 16px Inter,sans-serif;color:#0b0b0d;background:#ececf0;border:0;border-radius:10px;padding:14px;cursor:pointer;transition:background .2s}
+#joinm .go:hover{background:#36d67e}
+#joinm .go:focus-visible,#joinm .x:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+#joinm .note{margin:12px 0 0;text-align:center;font-size:12.5px;color:var(--mut)}
+#joinm #jdone{display:none;text-align:center}
+#joinm #jdone a{display:inline-block;margin-top:10px;padding:13px 20px;background:#36d67e;color:#0b0b0d;text-decoration:none;border-radius:10px;font-weight:600}
+.jbtn{margin-top:22px;font:600 15px Inter,sans-serif;color:#0b0b0d;background:#ececf0;border:0;border-radius:8px;padding:13px 22px;cursor:pointer}
+
+body.static{overflow:auto}
+body.static #fallback{display:block;max-width:760px;margin:0 auto;padding:12vh 24px 0}
+body.static #fallback small{letter-spacing:.2em;font-size:11px;color:rgba(255,255,255,.4)}
+body.static #fallback h1{font-weight:500;font-size:clamp(44px,9vw,80px);letter-spacing:-.045em;line-height:.97;margin:16px 0}
+body.static #fallback p{color:var(--mut);font-size:18px}
+body.static #defs{position:static;opacity:1;pointer-events:auto}
+body.static .col{position:static;width:auto;max-width:760px;margin:0 auto;padding:40px 24px}
+body.static #back{display:none}
+@media(max-width:760px){
+ .col{left:7%;width:86%;top:max(88px,14%)}
+ .col p{font-size:14px;margin-bottom:14px}.col h2{font-size:24px;margin-bottom:18px}
+ #back{left:7%;top:calc(env(safe-area-inset-top,0px) + 16px);padding:10px 26px 10px 20px;font-size:13px}
+}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
+</head>
+<body>
+<main id="fallback"><small>RICM CHANDIGARH · EST. CLUB</small><h1>Calibre<br>Club.</h1><p>Precision, power and unyielding loyalty. The spirit of RICM Chandigarh.</p><button class="jbtn" id="fjoin">Join the club</button></main>
+<section id="defs"><button id="back">← Back</button>
+<div class="col"><h2>The spirit of the club.</h2>
+<p class="lead"><b>Meet Calibre — more than a club.</b> Calibre is a student-driven community built to encourage creativity, collaboration and practical learning. Through engaging activities and shared experiences, we grow together, explore new ideas and turn potential into purpose.</p>
+<p><b>What does Calibre mean?</b> — The level of a person’s ability, talent and mind. High calibre means someone who stands out. Originally the inner diameter of a barrel: a measure of accuracy, strength and exact aim.</p>
+<p><b>Loyalty above all</b> — Unyielding loyalty makes us team-first, unstoppable comrades.</p>
+<p><b>Communications master</b> — The ultimate coordinator: synergy, network, tech.</p>
+<p><b>Vigilance &amp; strategy</b> — Alert, silent and calculating, the mind behind it all.</p>
+<p><b>Soundwave superior</b> — Spymaster, communications officer, unwavering devotion, vigilance and tireless coordination. Steadfast. United. Unstoppable.</p>
+<h3>Where ideas turn into action</h3>
+<ul class="vals vg">
+<li><b>Creativity</b>We inspire original thinking and bold ideas.</li>
+<li><b>Communication</b>We express ideas clearly and build connections.</li>
+<li><b>Collaboration</b>We work together to achieve more.</li>
+<li><b>Learning</b>We learn continuously and grow.</li>
+</ul>
+<h3>What the logo means</h3>
+<p>The Calibre logo represents the energy and potential of every student in our club. Its edges speak to creativity, while the circular form reflects collaboration and unity. Together, they reflect leadership, innovation, responsibility and excellence — the values that define who we are and what we strive to be.</p>
+<h3>More than a club. It’s a movement.</h3>
+<ul class="vals">
+<li><b>Creativity</b>Think beyond the ordinary.</li>
+<li><b>Action</b>From ideas to impact.</li>
+<li><b>Leadership</b>Lead with purpose.</li>
+<li><b>Innovation</b>Turn ideas into insight.</li>
+<li><b>Brotherhood</b>Stronger together.</li>
+<li><b>Responsibility</b>Stand together.</li>
+<li><b>Excellence</b>In everything we do.</li>
+</ul>
+<p class="lead">Calibre represents the passion, courage and commitment of students who believe in turning ideas into action and creating meaningful impact together.</p>
+<h3>Contact us</h3>
+<ul class="vals">
+<li><b>Email</b><a href="mailto:Calibrericm@outlook.com">Calibrericm@outlook.com</a></li>
+<li><b>Email</b><a href="mailto:ezrabridged@gmail.com">ezrabridged@gmail.com</a></li>
+<li><b>WhatsApp</b><a href="https://wa.me/919040517392" target="_blank" rel="noopener">+91 90405 17392</a></li>
+</ul>
+</div></section>
+<div id="joinm" role="dialog" aria-modal="true" aria-labelledby="jt">
+<div class="box">
+<button class="x" id="jx" aria-label="Close">&times;</button>
+<form id="jform" novalidate>
+<h3 id="jt">Join the club</h3>
+<p class="sub">Share your details and we’ll get in touch on WhatsApp.</p>
+<div class="f" id="gN"><label for="jn">Full name</label><input id="jn" autocomplete="name" placeholder="Your full name"><div class="err">Please enter your name.</div></div>
+<div class="f" id="gC"><label for="jc">Course</label><input id="jc" placeholder="e.g. BBA, B.Com, MBA, year"><div class="err">Please enter your course.</div></div>
+<div class="f" id="gW"><label for="jw">WhatsApp number</label><div class="ph"><span>+91</span><input id="jw" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="12" placeholder="90405 17392"></div><div class="err">Enter a valid 10-digit number.</div></div>
+<button type="submit" class="go">Submit on WhatsApp</button>
+<p class="note">Opens WhatsApp with your details ready to send.</p>
+<p class="mail">Or email: <a href="mailto:Calibrericm@outlook.com">Calibrericm@outlook.com</a> · <a href="mailto:ezrabridged@gmail.com">ezrabridged@gmail.com</a></p>
+</form>
+<div id="jdone"><h3>Almost done!</h3><p class="sub">If WhatsApp didn’t open, tap below to send your details.</p><a id="jlink" href="#" target="_blank" rel="noopener">Open WhatsApp</a></div>
+</div></div>
+<script>
+(function(){
+var CLUB="919040517392",m=document.getElementById("joinm"),f=document.getElementById("jform"),d=document.getElementById("jdone");
+function bad(i,on){document.getElementById(i).classList.toggle("bad",on)}
+window.openJoin=function(){f.style.display="";d.style.display="none";m.classList.add("on");setTimeout(function(){document.getElementById("jn").focus()},50)};
+function close(){m.classList.remove("on")}
+document.getElementById("jx").onclick=close;
+m.addEventListener("click",function(e){if(e.target===m)close()});
+addEventListener("keydown",function(e){if(e.key==="Escape")close()});
+var fb=document.getElementById("fjoin");if(fb)fb.onclick=window.openJoin;
+f.addEventListener("submit",function(e){
+ e.preventDefault();
+ var n=document.getElementById("jn").value.trim(),c=document.getElementById("jc").value.trim(),w=document.getElementById("jw").value.replace(/\D/g,"");
+ if(w.length===12&&w.indexOf("91")===0)w=w.slice(2);
+ var a=n.length>1,b=c.length>1,g=/^[6-9]\d{9}$/.test(w);
+ bad("gN",!a);bad("gC",!b);bad("gW",!g);
+ if(!(a&&b&&g))return;
+ var msg="Hello Calibre Club! I\u2019d like to join.\n\nName: "+n+"\nCourse: "+c+"\nWhatsApp: +91 "+w.slice(0,5)+" "+w.slice(5);
+ var url="https://wa.me/"+CLUB+"?text="+encodeURIComponent(msg);
+ document.getElementById("jlink").href=url;
+ f.style.display="none";d.style.display="block";
+ window.open(url,"_blank");
+});
+})();
+</script>
+<script type="module">
+import * as THREE from 'three';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+const JOIN_URL='#'; // put your join form / WhatsApp / Instagram link here
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let renderer;
+try{ if(reduce) throw 0; renderer=new THREE.WebGLRenderer({antialias:true}); }catch(e){ document.body.classList.add('static'); }
+const defs=document.getElementById('defs');
+if(renderer) await init();
+
+async function init(){
+const cv=renderer.domElement; cv.id='gl'; document.body.prepend(cv);
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+const scene=new THREE.Scene(); scene.background=new THREE.Color(0x050507);
+scene.environment=new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(),.04).texture;
+scene.environmentIntensity=.42;
+const key=new THREE.DirectionalLight(0xdfe8ff,1.6); key.position.set(-400,500,800); scene.add(key);
+const cam=new THREE.PerspectiveCamera(30,1,10,20000);
+const tilt=new THREE.Group(); scene.add(tilt);
+const U={uM:{value:new THREE.Vector3()},uA:{value:0},uR:{value:200}};
+function mat(){
+ const m=new THREE.MeshPhysicalMaterial({color:0x17171b,roughness:.36,clearcoat:.7,clearcoatRoughness:.12,specularIntensity:.7,iridescence:.55,iridescenceIOR:1.3,iridescenceThicknessRange:[250,650],envMapIntensity:1});
+ m.onBeforeCompile=s=>{Object.assign(s.uniforms,U);
+  s.vertexShader='varying vec3 vW;\n'+s.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nvW=(modelMatrix*vec4(transformed,1.)).xyz;');
+  s.fragmentShader='varying vec3 vW;uniform vec3 uM;uniform float uA,uR;\n'+s.fragmentShader.replace('#include <emissivemap_fragment>','#include <emissivemap_fragment>\nfloat gd=length(vW.xy-uM.xy)/uR;totalEmissiveRadiance+=vec3(.42,.37,.62)*.22*uA*exp(-1.6*gd*gd);');};
+ m.customProgramCacheKey=()=>'glass'; return m;
+}
+const B={TL:[0,0],tAB:[.22,0],tBC:[.515,0],tCE:[.84,0],TR:[1,0],BL:[0,1],bAD:[.34,1],bDE:[.865,1],BR:[1,1],J0:[.385,.72],J1:[.48,.62],J2:[.716,.49]};
+const NAMES=Object.keys(B), JN=['J0','J1','J2'], EDGE=['tAB','tBC','tCE','bAD','bDE'];
+const CELLS=[['TL','tAB','J0','bAD','BL'],['tAB','tBC','J1','J0'],['tBC','tCE','J2','J1'],['J0','J1','J2','bDE','bAD'],['tCE','TR','BR','bDE','J2']];
+let W,H,BW,BH,S,G,u,navH,gap,pw,ph,panelTop,oy,portrait,pieces=[],tex,ctx,ui={},hov='';
+let state='in',stateT=0,now=0,T=0;
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const eob=x=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const nrm=(x,y)=>{const l=Math.hypot(x,y)||1;return [x/l,y/l]};
+
+function shapeOf(pts,inset,rad){
+ let a=0;for(let i=0;i<pts.length;i++){const q=pts[(i+1)%pts.length];a+=pts[i].x*q.y-q.x*pts[i].y}
+ const P=a<0?pts.slice().reverse():pts,n=P.length,I=[];
+ for(let i=0;i<n;i++){const p0=P[(i+n-1)%n],p1=P[i],p2=P[(i+1)%n];
+  const d1=nrm(p1.x-p0.x,p1.y-p0.y),d2=nrm(p2.x-p1.x,p2.y-p1.y),n1=[-d1[1],d1[0]],n2=[-d2[1],d2[0]];
+  const k=inset/Math.max(.3,1+n1[0]*n2[0]+n1[1]*n2[1]);
+  I.push({x:p1.x+(n1[0]+n2[0])*k,y:p1.y+(n1[1]+n2[1])*k});}
+ const cr=[];
+ for(let i=0;i<n;i++){const p=I[i],pr=I[(i+n-1)%n],nx=I[(i+1)%n];
+  const l1=Math.hypot(pr.x-p.x,pr.y-p.y),l2=Math.hypot(nx.x-p.x,nx.y-p.y),r=Math.min(rad,l1*.45,l2*.45);
+  cr.push([{x:p.x+(pr.x-p.x)/l1*r,y:p.y+(pr.y-p.y)/l1*r},p,{x:p.x+(nx.x-p.x)/l2*r,y:p.y+(nx.y-p.y)/l2*r}]);}
+ const sh=new THREE.Shape(); sh.moveTo(cr[0][2].x,cr[0][2].y);
+ for(let i=1;i<=n;i++){const [a1,p,b]=cr[i%n];sh.lineTo(a1.x,a1.y);sh.quadraticCurveTo(p.x,p.y,b.x,b.y);}
+ return sh;
+}
+function setGeo(p,pts){
+ const c={x:0,y:0};pts.forEach(q=>{c.x+=q.x/pts.length;c.y+=q.y/pts.length});
+ const L=pts.map(q=>({x:q.x-c.x,y:q.y-c.y}));
+ p.c=c;p.r=Math.max(...L.map(q=>Math.hypot(q.x,q.y)));
+ const bev=2.6*G,dep=13*G;
+ p.glass.geometry.dispose();
+ p.glass.geometry=new THREE.ExtrudeGeometry(shapeOf(L,gap/2+bev,20*G),{depth:dep,bevelEnabled:true,bevelThickness:bev,bevelSize:bev,bevelSegments:3,curveSegments:5});
+ p.ink.geometry.dispose();
+ const g=new THREE.ShapeGeometry(shapeOf(L,gap/2+bev+G,20*G),5),pa=g.attributes.position,uv=g.attributes.uv;
+ for(let i=0;i<pa.count;i++)uv.setXY(i,(pa.getX(i)+c.x+BW/2)/BW,(pa.getY(i)+c.y+BH/2)/BH);
+ p.ink.geometry=g;p.ink.position.z=dep+bev+.6;
+}
+function pointer0(){return [pnx,pny]}
+let pnx=.5,pny=.5,pa=0;
+function cellPts(){
+ const P={};
+ NAMES.forEach((nm,k)=>{
+  let [x,y]=B[nm];const per=10+(k*7%11),ph0=k*1.7,corner=['TL','TR','BL','BR'].includes(nm);
+  if(!corner){x+=.03*Math.sin(2*Math.PI*T/per+ph0);}
+  if(JN.includes(nm))y+=.05*Math.sin(2*Math.PI*T/(per+4)+ph0*1.3);
+  if(!corner&&pa>.01){const dx=x-pnx,dy=y-pny,d=Math.hypot(dx,dy);
+   if(d<.6&&d>1e-4){const f=.05*(1-d/.6)*pa;x+=dx/d*f;if(!EDGE.includes(nm))y+=dy/d*f;}}
+  if(portrait)[x,y]=[y,x];
+  P[nm]={x:(x-.5)*BW,y:panelTop-y*ph};
+ });
+ return P;
+}
+function crest(c,x,y,s,fill,stroke){
+ c.save();c.translate(x,y);c.scale(s,s);c.lineJoin='miter';
+ const poly=a=>{c.beginPath();a.forEach((q,i)=>i?c.lineTo(q[0],q[1]):c.moveTo(q[0],q[1]));c.closePath()};
+ const sets=[[[-1,-1],[-.3,-.3],[-.85,-.3]],[[1,-1],[.3,-.3],[.85,-.3]],[[0,-1],[.16,-.3],[0,0],[-.16,-.3]],[[-.8,-.12],[.8,-.12],[0,1]]];
+ c.fillStyle=fill;c.strokeStyle=stroke;c.lineWidth=1.6/s;
+ sets.forEach(a=>{poly(a);c.fill();c.stroke()});
+ poly([[-.5,.0],[.5,.0],[0,.7]]);c.stroke();
+ c.restore();
+}
+function draw(){
+ const c=ctx,fam='Inter,system-ui,sans-serif';
+ c.clearRect(0,0,BW,BH);ui={};
+ const ls=v=>{try{c.letterSpacing=v+'px'}catch(e){}};
+ // nav
+ const ny=navH/2;
+ crest(c,34*u,ny,11*u,'rgba(185,171,255,.22)','#b9abff');
+ ls(0);c.font=`600 ${17*u}px ${fam}`;c.fillStyle='rgba(255,255,255,.94)';c.textBaseline='middle';c.textAlign='left';
+ c.fillText('Calibre',56*u,ny);
+ const link=(name,txt,x)=>{c.font=`500 ${14*u}px ${fam}`;const w=c.measureText(txt).width;
+  c.fillStyle=hov===name?'#fff':'rgba(255,255,255,.6)';c.fillText(txt,x,ny);ui[name]={x:x-8*u,y:ny-16*u,w:w+16*u,h:32*u};return w;};
+ if(BW>=640){let x=BW*.42;x+=link('l0','About',x)+34*u;link('l1','Spirit',x);}
+ c.font=`500 ${14*u}px ${fam}`;const jw=c.measureText('Join').width;link('nj','Join',BW-30*u-jw);
+ // panel
+ oy=navH+gap;const padL=Math.max(.055*pw,24*u);
+ c.textBaseline='alphabetic';
+ const cs=portrait?Math.min(pw*.2,ph*.14):Math.min(pw*.1,ph*.26);
+ crest(c,portrait?pw*.5:pw*.78,portrait?oy+ph*.8:oy+ph*.5,cs,'rgba(185,171,255,.1)','rgba(185,171,255,.5)');
+ ls(2.2*u);c.font=`500 ${11*u}px ${fam}`;c.fillStyle='rgba(255,255,255,.38)';
+ c.fillText('RICM CHANDIGARH · EST. CLUB',padL,oy+.135*ph);
+ const hs=portrait?Math.min(pw*.15,ph*.12):Math.min(pw*.078,ph*.2);
+ const y1=oy+.2*ph+hs*.85,y2=y1+hs*.97;
+ const gr=c.createLinearGradient(0,y1-hs,0,y2);gr.addColorStop(0,'#dcdce0');gr.addColorStop(1,'#bdbdc3');
+ ls(-.045*hs);c.font=`500 ${hs}px ${fam}`;c.fillStyle=gr;c.fillText('Calibre',padL,y1);c.fillText('Club.',padL,y2);
+ ls(0);c.font=`400 ${17*u}px ${fam}`;c.fillStyle='rgba(255,255,255,.55)';
+ const sy=y2+hs*.3+22*u;
+ c.fillText('Precision, power and unyielding loyalty.',padL,sy);c.fillText('The spirit of RICM Chandigarh.',padL,sy+27*u);
+ const by=sy+27*u+36*u,bw=150*u,bh=44*u;
+ c.fillStyle=hov==='join'?'#36d67e':'#ececf0';c.beginPath();c.roundRect(padL,by,bw,bh,8*u);c.fill();
+ ui.join={x:padL,y:by,w:bw,h:bh};
+ c.font=`600 ${15*u}px ${fam}`;c.fillStyle='#0b0b0d';c.textAlign='center';c.fillText('Join the club',padL+bw/2,by+bh/2+5*u);
+ c.textAlign='left';c.font=`500 ${15*u}px ${fam}`;c.fillStyle='rgba(255,255,255,.88)';
+ const lx=padL+bw+28*u,lt='Read the spirit →',lw=c.measureText(lt).width;
+ c.fillText(lt,lx,by+bh/2+5*u);ui.read={x:lx-6*u,y:by,w:lw+12*u,h:bh};
+ if(hov==='read'||hov==='l1'){c.fillRect(lx,by+bh/2+9*u,lw,1.2)}
+ ls(0);c.font=`400 ${11*u}px ${fam}`;c.fillStyle='rgba(255,255,255,.34)';
+ c.fillText('© Calibre Club',padL,oy+ph-24*u);c.textAlign='right';c.fillText('Soundwave superior',pw-padL,oy+ph-24*u);c.textAlign='left';
+ tex.needsUpdate=true;
+}
+function build(){
+ W=innerWidth;H=innerHeight;renderer.setSize(W,H);cam.aspect=W/H;cam.position.z=H/2/Math.tan(Math.PI/12);cam.updateProjectionMatrix();
+ const sm=W<640;BW=sm?W-32:W*.89;BH=sm?H-32:H*.83;S=BW/1730;G=Math.max(S,.45);u=Math.max(S*1.15,.78);
+ navH=BH*.108;gap=14*G;pw=BW;ph=BH-navH-gap;panelTop=BH/2-navH-gap;portrait=W/H<.9;U.uR.value=300*G;
+ pieces.forEach(p=>{tilt.remove(p.g);p.glass.geometry.dispose();p.ink.geometry.dispose();p.glass.material.dispose()});pieces=[];
+ const dpr=Math.max(1.5,Math.min(devicePixelRatio,2));
+ const cvs=document.createElement('canvas');cvs.width=BW*dpr;cvs.height=BH*dpr;ctx=cvs.getContext('2d');ctx.scale(dpr,dpr);
+ tex=new THREE.CanvasTexture(cvs);tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=8;
+ for(let i=0;i<6;i++){
+  const g=new THREE.Group(),glass=new THREE.Mesh(new THREE.BufferGeometry(),mat()),
+  ink=new THREE.Mesh(new THREE.BufferGeometry(),new THREE.MeshBasicMaterial({map:tex,transparent:true,toneMapped:false,depthWrite:false}));
+  g.add(glass,ink);tilt.add(g);
+  const sd=Math.random;
+  pieces.push({nav:i===0,g,glass,ink,c:{x:0,y:0},r:100,z:0,vz:0,rx:0,vrx:0,ry:0,vry:0,tx:0,ty:0,hv:0,
+   fl:{vx:0,vy:0,vz:(420+sd()*380)*G,axis:new THREE.Vector3(sd()-.5,sd()-.5,sd()-.5).normalize(),ang:2+sd()*1.6},
+   dOut:i===0?0:.05*i,dIn:i===0?0:.03*i});
+ }
+ const h2=BH/2;
+ setGeo(pieces[0],[{x:-BW/2,y:h2},{x:BW/2,y:h2},{x:BW/2,y:h2-navH},{x:-BW/2,y:h2-navH}]);
+ const P=cellPts();CELLS.forEach((cl,i)=>{const p=pieces[i+1];setGeo(p,cl.map(n=>P[n]));
+  p.fl.vx=p.c.x*1.1+(Math.random()-.5)*200*G;p.fl.vy=p.c.y*.3-(250+Math.random()*350)*G;});
+ pieces[0].fl.vx=0;pieces[0].fl.vy=300*G;
+ draw();
+}
+await Promise.race([document.fonts.load('500 20px Inter').then(()=>document.fonts.load('600 20px Inter')),new Promise(r=>setTimeout(r,1500))]);
+build();
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{build();},150)});
+
+// pointer
+const ray=new THREE.Raycaster(),nd=new THREE.Vector2(),pl=new THREE.Plane(),tmp=new THREE.Vector3();
+let mx=0,my=0,inside=false,px=0,py=0,sx=0,sy=0,hitP=null,hitLoc=null,ptr={x:0,y:0};
+function probe(x,y){
+ nd.set(x/W*2-1,-(y/H)*2+1);ray.setFromCamera(nd,cam);tilt.updateMatrixWorld(true);
+ const hs=ray.intersectObjects(pieces.map(p=>p.glass));
+ hitP=hs[0]?pieces.find(p=>p.glass===hs[0].object):null;hitLoc=hs[0]?tilt.worldToLocal(hs[0].point.clone()):null;
+ const n=new THREE.Vector3(0,0,1).transformDirection(tilt.matrixWorld);pl.setFromNormalAndCoplanarPoint(n,tilt.position);
+ let name='';
+ if(ray.ray.intersectPlane(pl,tmp)){
+  U.uM.value.copy(tmp);const l=tilt.worldToLocal(tmp.clone()),cx=l.x+BW/2,cy=BH/2-l.y;
+  let nx=cx/pw,ny=(cy-oy)/ph;if(portrait)[nx,ny]=[ny,nx];pnx=nx;pny=ny;
+  for(const k in ui){const r=ui[k];if(cx>=r.x&&cx<=r.x+r.w&&cy>=r.y&&cy<=r.y+r.h){name=k;break}}
+ }
+ return name;
+}
+addEventListener('pointermove',e=>{ptr.x=e.clientX;ptr.y=e.clientY;mx=e.clientX/W*2-1;my=-(e.clientY/H*2-1);inside=true});
+document.documentElement.addEventListener('pointerleave',()=>{inside=false});
+function shatter(){state='out';stateT=now;setTimeout(()=>defs.classList.add('on'),280)}
+document.getElementById('back').onclick=()=>{defs.classList.remove('on');state='in';stateT=now};
+cv.addEventListener('click',e=>{
+ if(state!=='home')return;
+ const n=probe(e.clientX,e.clientY);
+ if(n==='read'||n==='l0'||n==='l1')shatter();
+ else if(n==='join'||n==='nj'){window.openJoin();}
+});
+
+let last=performance.now(),acc=0;
+const eu=new THREE.Euler(),qt=new THREE.Quaternion(),qf=new THREE.Quaternion(),D=Math.PI/180;
+function fOf(p){const tt=now-stateT;
+ if(state==='out')return Math.pow(clamp((tt-p.dOut)/.72,0,1),3);
+ if(state==='in')return 1-eob(clamp((tt-p.dIn)/.72,0,1));
+ return 0}
+function frame(t){
+ const dt=Math.min((t-last)/1000,.05);last=t;now=t/1000;T+=dt;
+ if(state==='in'&&now-stateT>.95)state='home';
+ sx+=(mx*(inside?1:0)-sx)*(1-Math.exp(-dt/.3));sy+=(my*(inside?1:0)-sy)*(1-Math.exp(-dt/.3));
+ tilt.rotation.y=(sx*7-1.2)*D;tilt.rotation.x=(-sy*5.5+.8)*D;
+ const nh=inside?probe(ptr.x,ptr.y):(hitP=null,'');
+ const active=state==='home'&&inside;
+ const nn=active?nh:'';if(nn!==hov){hov=nn;draw();cv.style.cursor=hov?'pointer':''}
+ U.uA.value+=((active?1:0)-U.uA.value)*(1-Math.exp(-dt/.25));pa+=((active?1:0)-pa)*(1-Math.exp(-dt/.25));
+ acc+=dt;if(acc>1/45){acc=0;const P=cellPts();CELLS.forEach((cl,i)=>setGeo(pieces[i+1],cl.map(n=>P[n])));}
+ pieces.forEach(p=>{
+  const f=fOf(p),hovd=active&&hitP===p&&f<.01;
+  const tz=hovd?(p.nav?32:50)*G:0;let tx=0,ty=0;
+  if(hovd&&hitLoc){const dx=clamp((hitLoc.x-p.c.x)/p.r,-1,1),dy=clamp((hitLoc.y-p.c.y)/p.r,-1,1);ty=.24*dx;tx=-.24*dy;}
+  const s=Math.min(dt,.03);
+  p.vz+=(-170*(p.z-tz)-19*p.vz)*s;p.z+=p.vz*s;
+  p.vrx+=(-170*(p.rx-tx)-19*p.vrx)*s;p.rx+=p.vrx*s;
+  p.vry+=(-170*(p.ry-ty)-19*p.vry)*s;p.ry+=p.vry*s;
+  p.hv+=((hovd?1:0)-p.hv)*(1-Math.exp(-dt/.12));
+  const m=p.glass.material;m.iridescence=.55+.45*p.hv;m.envMapIntensity=1+.9*p.hv;
+  p.g.visible=f<.999;
+  p.g.position.set(p.c.x+p.fl.vx*f,p.c.y+p.fl.vy*f-700*G*f*f,p.z*(1-f)+p.fl.vz*f);
+  qt.setFromEuler(eu.set(p.rx,p.ry,0));qf.setFromAxisAngle(p.fl.axis,p.fl.ang*f);p.g.quaternion.copy(qf).multiply(qt);
+ });
+ renderer.render(scene,cam);requestAnimationFrame(frame);
+}
+requestAnimationFrame(t=>{last=t;stateT=t/1000;frame(t)});
+}
+</script>
+</body>
+</html>
